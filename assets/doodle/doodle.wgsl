@@ -5,6 +5,7 @@
 #import bevy_pbr::view_transformations::position_world_to_clip
 
 // Define shader parameters as uniforms
+// If no padding, the shader will not work in the WASM build, because the struct size must be a multiple of 16 bytes
 struct DoodleParams {
     noise_snap: f32,
     noise_scale: f32,
@@ -53,9 +54,15 @@ fn vertex(vertex: Vertex) -> VertexOutput {
     
     let time = snap(globals.time, noise_snap);
     
-    // Generate random displacement using vertex position and time
+    // Modified: Generate noise centered around 0
     let time_vec = vec3<f32>(time, 0.0, 0.0);
-    let noise = random3(vertex.position + time_vec).xyz * noise_scale;
+    let noise_raw = random3(vertex.position + time_vec).xyz;
+    
+    // Convert noise values from [0,1] range to [-0.5,0.5] range to center around 0
+    let centered_noise = noise_raw - 0.5;
+    
+    // Apply noise scale
+    let noise = centered_noise * noise_scale;
     
     // Apply displacement to vertex position
     let displaced_position = vertex.position + noise;
