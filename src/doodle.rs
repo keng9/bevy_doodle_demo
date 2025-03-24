@@ -58,7 +58,7 @@ fn setup(
 
     let material = materials.add(DoodleMaterial {
         params: DoodleParams::default(),
-        texture: asset_server.load("doodle.png"),
+        texture: asset_server.load("doodle/doodle.png"),
     });
 
     commands.spawn((
@@ -102,11 +102,11 @@ pub struct DoodleMaterial {
 
 impl Material for DoodleMaterial {
     fn fragment_shader() -> ShaderRef {
-        "doodle.wgsl".into()
+        "doodle/doodle.wgsl".into()
     }
 
     fn vertex_shader() -> ShaderRef {
-        "doodle.wgsl".into()
+        "doodle/doodle.wgsl".into()
     }
     fn alpha_mode(&self) -> AlphaMode {
         AlphaMode::Blend

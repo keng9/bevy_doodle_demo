@@ -1,4 +1,3 @@
-use crate::loading::TextureAssets;
 use crate::GameState;
 use bevy::prelude::*;
 
@@ -32,7 +31,7 @@ impl Default for ButtonColors {
 #[derive(Component)]
 struct Menu;
 
-fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
+fn setup_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
     info!("menu");
 
     commands
@@ -78,7 +77,7 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
                     ));
                     parent.spawn((
                         ImageNode {
-                            image: textures.bevy.clone(),
+                            image: asset_server.load("doodle/bevy.png"),
                             ..default()
                         },
                         Node {

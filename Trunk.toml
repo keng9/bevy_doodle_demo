@@ -1,4 +1,5 @@
 [build]
+# public_url = "./doodle2/"
 public_url = "./"
 
 [serve]
